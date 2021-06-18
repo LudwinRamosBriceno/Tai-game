@@ -1,0 +1,6 @@
+Paul 300
+Pepe 200
+Jose 350
+Marta 20
+Aaron 20
+Luis 20

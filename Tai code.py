@@ -57,9 +57,9 @@ Bono3=0
 # sounds
 
 pygame.mixer.init()
-#sonido_nave= pygame.mixer.Sound("Laser shot.mp3")
+sonido_passlevel= pygame.mixer.Sound("POKEMON Level Up.mp3")
 Press_botton=pygame.mixer.Sound("Boton.mp3")
-#sound_enem2=pygame.mixer.Sound("Bola de Fuego.mp3")
+sound_enem=pygame.mixer.Sound("Cartoon Bounce.mp3")
 #sound_enem3=pygame.mixer.Sound("Apagando sistema.mp3")
 #sound_enem1=pygame.mixer.Sound("Alien Apagado.mp3")
 
@@ -72,7 +72,6 @@ def Final_register():
     global puntaje_final,Score
     suma_final= Score + Bono2 + Bono1 + Bono3
     puntaje_final=str(suma_final)
-    #params = [Player, puntaje]
 
     # save name 
     file_final = open("player.txt", "a")
@@ -81,11 +80,11 @@ def Final_register():
     final_to_mainscreen()
 
 def final_to_mainscreen():
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.play(100)
     global salir3,Score_final,Bono_final
     Press_botton.play()
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
     Score_final=0
     Bono_final=0
     salir3=False
@@ -95,10 +94,12 @@ def final_to_mainscreen():
 def final_screen():
     global final,Level_3,Score_final,Bono_final,Bono1,Bono2,Bono3
     Press_botton.play()
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Epic Space Emotional Music.mp3")
-    #pygame.mixer.music.play(10)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("MELANCHOLI.mp3")
+    pygame.mixer.music.play(10)
     Level_3.destroy()
+    puntaje_final=0
+    Bono_final=0
     Bono_final= Bono1 + Bono2 + Bono3
     puntaje_final= Score + Bono1 + Bono2 + Bono3
     img_final= ImageTk.PhotoImage(Image.open("Final screen.jpg").resize((1000,700)))
@@ -124,10 +125,10 @@ def final_screen():
 # Come back from game screen to main screen by press "salir" button
 def Screen_Level_3_to_mainscreen():
     Press_botton.play()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.play(100)
     global Score, Life3, Time3,Marcadores3,salir3
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
     salir3=False
     Score=0
     Time3=0
@@ -143,10 +144,10 @@ def detener3():
     Press_botton.play()
     global pausa3
     pausa3=not pausa3
-    #if pausa3==False:
-    #    pygame.mixer.music.pause()
-    #if pausa3==True:
-    #    pygame.mixer.music.unpause()
+    if pausa3==False:
+        pygame.mixer.music.pause()
+    if pausa3==True:
+        pygame.mixer.music.unpause()
 
 
 "Transition functions from level 3 to final screen"
@@ -161,6 +162,8 @@ def cambiara_final():
         board.after(10,cambiara_final)
 
 def transiciona_final():
+    pygame.mixer.music.stop()
+    sonido_passlevel.play()
     continue_nivel3= Label(Level_3,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "¡FELICIDADES! ¡HAS VENCIDO AL MIEDO!",height=4,width=50,fg="white",font=("Courier",13))
     continue_nivel3.place(x=230,y=300)
     continue_to_level3=Button(continue_nivel3,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10 ), command=final_screen)
@@ -168,15 +171,14 @@ def transiciona_final():
 
 "Level 3 register function"
 def Level3_register():
-    global puntaje3,Score
-    suma3= Score + Bono2 + Bono1 + Bono3
-    puntaje3=str(suma3)
-    #params = [Player, puntaje]
+    global puntaje,Score
+    suma= Score + Bono2 + Bono1 + Bono3
+    puntaje=str(suma)
 
     # save name 
-    file3 = open("player.txt", "a")
-    file3.write(Player +"\t"+ puntaje3 + "\n")
-    file3.close()
+    file = open("player.txt", "a")
+    file.write(Player +"\t"+ puntaje + "\n")
+    file.close()
     pantalla_derrota3_inicio()
 
 " Level 3 Defeat Screen"
@@ -184,10 +186,10 @@ def Level3_register():
 # Transitory function to pass from defeat screen to main screen
 def pantalla_derrota3_inicio():
     Press_botton.play()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.play(100)
     global Score, Time3,Life3
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
     Score=0
     Time3=0
     Life3=3
@@ -206,9 +208,9 @@ def cambiar_a_derrota3():
 
 def derrota3():
     global derrota_canv3,Score
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("INFINITY Epic Futuristic Music.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.play(100)
     img_derrota3= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
     img_words_derrota3= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
     img_titulo_derrota3= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
@@ -266,27 +268,31 @@ def mover_enemigos3():
         enemigo3_object+=[Level_3.create_image(enemigo3_var.xpos,enemigo3_var.ypos,anchor=NW, image=image_enemigos3)]
     while transition3 and pase_nivel3 and salir3:
         if pausa3:
-            #print(enemigo1_object)
+            
             for b, ball in zip(enemigo3_object, enemigos3_list):
-                #box_enemigos1=Level_1.bbox(b)
+                
                 Level_3.move(b,ball.xspeed,ball.yspeed)
                 
                 x_enemigos3, y_enemigos3 =Level_3.coords(b)
                 
                 if cont3>=1:
                     if y_enemigos3 >= height-120:
+                        sound_enem.play()
                         ball.yspeed = random.randint(-14,-1)
                         ball.xspeed = random.randint(-14,14)
                         
                     if y_enemigos3 <= 0:
+                        sound_enem.play()
                         ball.yspeed = random.randint(1,14)
                         ball.xspeed = random.randint(-14,14)
                         
                     if x_enemigos3 >= 850:
+                        sound_enem.play()
                         ball.xspeed = random.randint(-14,-1)
                         ball.yspeed = random.randint(-14,14)
                         
                     if x_enemigos3 <= 0:
+                        sound_enem.play()
                         ball.xspeed = random.randint(1,14)
                         ball.yspeed = random.randint(-14,14)
                     
@@ -308,8 +314,8 @@ def mover_enemigos3():
                 Time3+=1
                 Score+=5
                 Marcadores3.config(text="Score: {} \n   Time: {} seg \n Life:{}".format(Score, Time3,Life3))
-            if Life3==3 and Time3==20 or Time3==50:
-                Bono3+=20
+                if Life3==3 and Time3==20 or Time3==50:
+                    Bono3+=20
                 
             if Time3>=60:
                 enemigos3_list=[]
@@ -329,9 +335,9 @@ def mover_enemigos3():
 
 def Screen_Level_3():
     global Level_3, zombie3,enemigos3,Villanos3,marcador_puntaje3,marcador_nombre_canv3,Marcadores3,Time3,Life3,Score,Bono3,pasar3
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Zathura Soundtrack 1.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Midnight Wood.mp3")
+    pygame.mixer.music.play(100)
     if pasar3:
         background.destroy()
         pasar3=False
@@ -424,9 +430,9 @@ def mover3(event):
 def Screen_Level_2_to_mainscreen():
     Press_botton.play()
     global Score, Life2, Time2,Marcadores2,salir2
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.play(100)
     salir2=False
     Score=0
     Time2=0
@@ -442,10 +448,10 @@ def detener2():
     Press_botton.play()
     global pausa2
     pausa2=not pausa2
-    #if pausa2==False:
-    #    pygame.mixer.music.pause()
-    #if pausa2==True:
-    #    pygame.mixer.music.unpause()
+    if pausa2==False:
+        pygame.mixer.music.pause()
+    if pausa2==True:
+        pygame.mixer.music.unpause()
 
 
 "Transition functions from level 2 to level 3"
@@ -460,6 +466,8 @@ def cambiara_nivel2():
         board.after(10,cambiara_nivel2)
 
 def transiciona_nivel2():
+    pygame.mixer.music.stop()
+    sonido_passlevel.play()
     continue_nivel2= Label(Level_2,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "¡FELICIDADES! ¿Listo para el siguiente reto?",height=4,width=50,fg="white",font=("Courier",13))
     continue_nivel2.place(x=230,y=300)
     continue_to_level2=Button(continue_nivel2,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10) , command=Screen_Level_3)
@@ -467,15 +475,14 @@ def transiciona_nivel2():
 
 "Level 2 register function"
 def Level2_register():
-    global puntaje2,Score
-    suma2= Score + Bono2 + Bono1
-    puntaje2=str(suma2)
-    #params = [Player, puntaje]
+    global puntaje,Score
+    suma= Score + Bono2 + Bono1
+    puntaje=str(suma)
 
     # save name 
-    file2 = open("player.txt", "a")
-    file2.write(Player +"\t"+ puntaje2 + "\n")
-    file2.close()
+    file = open("player.txt","a")
+    file.write(Player +"\t"+ puntaje + "\n")
+    file.close()
     pantalla_derrota2_inicio()
 
 " Level 1 Defeat Screen"
@@ -484,9 +491,9 @@ def Level2_register():
 def pantalla_derrota2_inicio():
     Press_botton.play()
     global Score, Time2,Life2
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.play(100)
     Score=0
     Time2=0
     Life2=3
@@ -505,9 +512,9 @@ def cambiar_a_derrota2():
 
 def derrota2():
     global derrota_canv2,Score
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("INFINITY Epic Futuristic Music.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.play(100)
     img_derrota2= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
     img_words_derrota2= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
     img_titulo_derrota2= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
@@ -536,7 +543,6 @@ def collision2(fantasmas,ball):
         enemigo2_object.remove(fantasmas)
         enemigos2_list.remove(ball)
         Level_2.delete(fantasmas)
-        print(Life2)
 
     if Life2<=0:
         Life2=0
@@ -566,27 +572,31 @@ def mover_enemigos2():
         enemigo2_object+=[Level_2.create_image(enemigo2_var.xpos,enemigo2_var.ypos,anchor=NW, image=image_enemigos2)]
     while transition2 and pase_nivel2 and salir2:
         if pausa2:
-            #print(enemigo1_object)
+            
             for b, ball in zip(enemigo2_object, enemigos2_list):
-                #box_enemigos1=Level_1.bbox(b)
+                
                 Level_2.move(b,ball.xspeed,ball.yspeed)
                 
                 x_enemigos2, y_enemigos2 =Level_2.coords(b)
                 
                 if cont2>=1:
                     if y_enemigos2 >= height-120:
+                        sound_enem.play()
                         ball.yspeed = random.randint(-14,-1)
                         ball.xspeed = random.randint(-14,14)
                         
                     if y_enemigos2 <= 0:
+                        sound_enem.play()
                         ball.yspeed = random.randint(1,14)
                         ball.xspeed = random.randint(-14,14)
                         
                     if x_enemigos2 >= 850:
+                        sound_enem.play()
                         ball.xspeed = random.randint(-14,-1)
                         ball.yspeed = random.randint(-14,14)
                         
                     if x_enemigos2 <= 0:
+                        sound_enem.play()
                         ball.xspeed = random.randint(1,14)
                         ball.yspeed = random.randint(-14,14)
                     
@@ -608,8 +618,8 @@ def mover_enemigos2():
                 Time2+=1
                 Score+=3
                 Marcadores2.config(text="Score: {} \n   Time: {} seg \n Life:{}".format(Score, Time2,Life2))
-            if Life2==3 and Time2==20 or Time2==50:
-                Bono2+=20
+                if Life2==3 and Time2==20 or Time2==50:
+                    Bono2+=20
                 
             if Time2>=60:
                 enemigos2_list=[]
@@ -629,9 +639,9 @@ def mover_enemigos2():
 
 def Screen_Level_2():
     global Level_2, zombie2,enemigos2,Villanos2,marcador_puntaje2,marcador_nombre_canv2,Marcadores2,Time2,Life2,Score,Bono2,pasar2
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Zathura Soundtrack 1.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Halloween Music Witch.mp3")
+    pygame.mixer.music.play(100)
     if pasar2:
         Bono2=0
         background.destroy()
@@ -669,9 +679,6 @@ def Screen_Level_2():
     # Player's airplane 
     zombie_img2 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
     zombie2= Level_2.create_image(400,450,anchor=NW, image=zombie_img2)
-    #caracter del enemigo
-    #image_enemigos1= ImageTk.PhotoImage(Image.open("enemy1.png"))#.resize((150,125)))
-    #enemigos1= Level_1.create_image(200,0,anchor=NW, image=image_enemigos1,tags="enemigos1")
     
     #move user airplane 
     Level_2.bind_all("<Key>",mover2)
@@ -723,11 +730,11 @@ def mover2(event):
 
 # Come back from game screen to main screen by press "salir" button
 def Screen_Level_1_to_mainscreen():
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.play(100)
     Press_botton.play()
     global Score, Life1, Time1,Marcadores1,salir1
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
     salir1=False
     Score=0
     Time1=0
@@ -743,10 +750,10 @@ def detener1():
     Press_botton.play()
     global pausa1
     pausa1=not pausa1
-    #if pausa1==False:
-    #    pygame.mixer.music.pause()
-    #if pausa1==True:
-    #    pygame.mixer.music.unpause()
+    if pausa1==False:
+        pygame.mixer.music.pause()
+    if pausa1==True:
+        pygame.mixer.music.unpause()
 
 
 "Transition from level 1 to level 2"
@@ -761,6 +768,8 @@ def cambiara_nivel1():
         board.after(10,cambiara_nivel1)
 
 def transicion_nivel1():
+    pygame.mixer.music.stop()
+    sonido_passlevel.play()
     continue_nivel= Label(Level_1,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "¡FELICIDADES! ¿Listo para el siguiente reto?",height=4,width=50,fg="white",font=("Courier",13))
     continue_nivel.place(x=230,y=300)
     continue_to_level=Button(continue_nivel,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10 ), command=Screen_Level_2)
@@ -768,10 +777,9 @@ def transicion_nivel1():
 
 "Level 1 register function"
 def Level1_register():
-    global puntaje,Score,params
+    global puntaje,Score
     suma= Score + Bono1
     puntaje=str(suma)
-    #params = [Player, puntaje]
 
     # save name 
     file = open("player.txt", "a")
@@ -784,10 +792,10 @@ def Level1_register():
 # Transitory function to pass from defeat screen to main screen
 def pantalla_derrota1_inicio():
     Press_botton.play()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.play(100)
     global Score, Time1,Life1
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Interstellar Main Theme.mp3") 
-    #pygame.mixer.music.play(100)
     Score=0
     Time1=0
     Life1=3
@@ -806,9 +814,9 @@ def cambiar_a_derrota1():
 
 def derrota1():
     global derrota_canv1,Score
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("INFINITY Epic Futuristic Music.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.play(100)
     img_derrota= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
     img_words_derrota= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
     img_titulo_derrota= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
@@ -837,7 +845,6 @@ def collision1(calabazas,ball):
         enemigo1_object.remove(calabazas)
         enemigos1_list.remove(ball)
         Level_1.delete(calabazas)
-        print(Life1)
 
     if Life1<=0:
         Life1=0
@@ -876,18 +883,22 @@ def mover_enemigos1():
                 
                 if cont1>=1:
                     if y_enemigos1 >= height-120:
+                        sound_enem.play()
                         ball.yspeed = random.randint(-14,-1)
                         ball.xspeed = random.randint(-14,14)
                         
                     if y_enemigos1 <= 0:
+                        sound_enem.play()
                         ball.yspeed = random.randint(1,14)
                         ball.xspeed = random.randint(-14,14)
                         
                     if x_enemigos1 >= 850:
+                        sound_enem.play()
                         ball.xspeed = random.randint(-14,-1)
                         ball.yspeed = random.randint(-14,14)
                         
                     if x_enemigos1 <= 0:
+                        sound_enem.play()
                         ball.xspeed = random.randint(1,14)
                         ball.yspeed = random.randint(-14,14)
                     
@@ -909,10 +920,10 @@ def mover_enemigos1():
                 Time1+=1
                 Score+=1
                 Marcadores1.config(text="Score: {} \n   Time: {} seg \n Life:{}".format(Score, Time1,Life1))
-            if Life1==3 and Time1==20 or Time1==50:
-                Bono1+=20
+                if Life1==3 and Time1==20 or Time1==50:
+                    Bono1+=20
                 
-            if Time1>=60:
+            if Time1>=5:
                 enemigos1_list=[]
                 enemigo1_object=[]
                 Life1=0
@@ -921,18 +932,17 @@ def mover_enemigos1():
         else:
             time.sleep(0.01)
     
-    if Time1>=60:
+    if Time1>=5:
         Level_1.unbind_all("<Key>")
     elif Life1<=0:
         transition1=False
         Level_1.unbind_all("<Key>")
         
-
 def Screen_Level_1():
     global Level_1, zombie1,enemigos1,Villanos1,marcador_puntaje1,marcador_nombre_canv1,Marcadores1,Time1,Life1,Score,Bono1
-    #pygame.mixer.music.stop()
-    #pygame.mixer.music.load("Zathura Soundtrack 1.mp3")
-    #pygame.mixer.music.play(100)
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("halloween.mp3")
+    pygame.mixer.music.play(100)
     background.destroy()
 
     #Scoreboards
@@ -964,9 +974,6 @@ def Screen_Level_1():
     # Player's airplane 
     zombie_img1 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
     zombie1= Level_1.create_image(400,450,anchor=NW, image=zombie_img1)
-    #caracter del enemigo
-    #image_enemigos1= ImageTk.PhotoImage(Image.open("enemy1.png"))#.resize((150,125)))
-    #enemigos1= Level_1.create_image(200,0,anchor=NW, image=image_enemigos1,tags="enemigos1")
     
     #move user airplane 
     Level_1.bind_all("<Key>",mover1)
@@ -1046,7 +1053,8 @@ def nombre_vacío3(Nombre):
 "MAIN SCREEN"
 
 def main_screen():
-    global background
+    global background,Score
+    Score=0
 
     # canvas creation
     imagenmenu = ImageTk.PhotoImage(Image.open("mainwindow.png"))
@@ -1091,14 +1099,11 @@ def main_screen():
     Boton_about = Button(background,image=imageButton_about,bd=6,bg="darkgrey",command= screen_about)
     Boton_about.place(x = 30, y = 110)
     # open scores window button
-    Boton_scores = Button(background,image=imageButton_scores,bd=6,bg="darkgrey", command= Update)
+    Boton_scores = Button(background,image=imageButton_scores,bd=6,bg="darkgrey", command= insert_lista)
     Boton_scores.place(x = 30, y = 30)
     # open history window
     bookButton = Button(background, image= imageButton_book, bg = 'white', borderwidth=5,command= historyGame)
     bookButton.place(x=90, y= 540)
-    # open register window button
-    #registerButton = Button(background, image = imageButton_register, command = register, borderwidth= 10, bg = 'grey')
-    #registerButton.place(x = 30, y = 270)
 
     Jugador.focus()
     background.mainloop()
@@ -1111,11 +1116,17 @@ def main_screen():
 def pass_historyGame_mainscreen():
     global history_canv
     Press_botton.play()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.play(100)
     history_canv.destroy()
     main_screen()
 
 def historyGame():
     Press_botton.play()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("Epic Halloween MusicDark Vocal.mp3")
+    pygame.mixer.music.play(100)
     global history_canv, background
     background.destroy()
     img_history = ImageTk.PhotoImage(Image.open("historywindow.png"))
@@ -1173,44 +1184,89 @@ def screen_scores():
     scores_fondo= scores_canv.create_image(0,0,anchor=NW, image=img_about)
     img_puntuaciones = ImageTk.PhotoImage(Image.open("text puntuaciones.png"))
     text_puntuaciones= scores_canv.create_image(90,60,anchor=NW, image=img_puntuaciones)
-    #information= Label(scores_canv,borderwidth=10,relief="sunken",bg="black",anchor=N,height=18,width=40,fg="white",font=("Courier",13))
-    #information.place(x=80,y=120)
     imageButton_comeback_scores = ImageTk.PhotoImage(Image.open("destroy.png").resize((60,60)))
     comeback=Button(scores_canv,padx=18,pady=5,image=imageButton_comeback_scores,bd=5,bg="darkgrey", command=pass_scores_to_mainscreen)
     comeback.place(x=240, y=500)
     text_window = Text(scores_canv,width=30,height=10,bg="black",fg="white", borderwidth= 8,font = ('Helvetica', 16))
     window_text= scores_canv.create_window(80,180,anchor=NW, window=text_window)
     text_file = open("result.txt", "r+")
-    text_file
     txt = text_file.read()
     text_window.insert(END, txt)
     text_file.close()
-    #reading_scores()
     scores_canv.mainloop()
 
 "Arrange scores"
 
 def Update():
+    global scores_var,orden_score,puntajes_let,exp1
     exp1=0
-    scores_var = []
-    with open("player.txt") as f:
-        for line in f:
-            name, score = line.split()
-            scores_var.append([score, name])
-
-    scores_var.sort(key=lambda x: x[1])
-    scores_var.sort(reverse = True)
-
+    scores_var_temp=[]
+    puntajes_let=[]
+    puntajes_let=quick_sort(orden_score)
+    puntajes_let.reverse()
     file = open('result.txt', 'w')
+    for i in puntajes_let:
+        
+        n=str(i)
+        scores_var_temp=[]
+        for score2, name in scores_var:
 
-    for score, name in scores_var:
-        print(score, name)
-        if exp1<5:
-            file.write(name + '\t' + score + '\n')
-            exp1+=1
+            if n==score2 and exp1<5:
+                
+                file.write(name +"\t"+ score2 + "\n")
+                exp1+=1
+            else:
+                scores_var_temp+=[[score2,name]]
+        scores_var=scores_var_temp
+        scores_var.reverse()
+        if scores_var_temp==[]:
+            break
+
     file.close()
     screen_scores()
 
+def insert_lista():
+    global orden_score,scores_var
+    orden_score=[]
+    scores_var = []
+    with open("player.txt") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            else:
+                name, score1 = line.split()
+                scores_var.append([score1, name])
+    for score2, name in scores_var:
+        num=int(score2)
+        orden_score+=[num]
+    Update()
+
+"Quick sort algorithm"
+
+def quick_sort(lista):
+    
+    length = len(lista)
+    
+    if length <= 1:
+        return lista
+    else:
+        middle=round(length/2)
+        pivot = lista.pop(middle)
+
+    items_greater = []
+    items_lower = []
+    
+    for item in lista:
+        if item > pivot:
+            items_greater+=[item]
+
+        else:
+            items_lower+=[item]
+    
+    return quick_sort(items_lower) + [pivot] + quick_sort(items_greater)
+
+pygame.mixer.music.load("Ghostly Mansion.mp3") 
+pygame.mixer.music.play(100)
 
 main_screen()
 board.mainloop()

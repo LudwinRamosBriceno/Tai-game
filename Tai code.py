@@ -5,10 +5,9 @@ import random
 import time
 import threading
 
-from pygame.constants import DROPFILE
-
-#Main window
+# Main window
 board = Tk()
+
 # Window size and name
 board.geometry("1000x700")
 board.resizable(height=False, width=False)
@@ -18,7 +17,7 @@ board.iconbitmap("zombie.ico")
 screen_width = board.winfo_screenwidth()
 screen_height = board.winfo_screenheight()
 
-#Screen size
+# Screen size
 width = 1000
 height = 700
 
@@ -28,9 +27,9 @@ y_screen = (screen_height / 2) - (height / 2)
 board.geometry(f'{width}x{height}+{int(x_screen)}+{int(y_screen)}')
 board.resizable(False, False)
 
-# "x" to move the airplane for "right and left"
+# "x" to move the image zombie for "right and left"
 x=10
-# "y" to move the airplane for "UP and DOWN"
+# "y" to move the image zombie for "UP and DOWN"
 y=10
 
 # Speeds class for enemies
@@ -38,16 +37,16 @@ y=10
 class Class_enemies:
     def __init__(self):
         self.xpos = random.randint(0, 850)
-        self.ypos = -200  #random.randint(0, 700)
-        self.xspeed = 0 #random.randint(1, 20)
-        self.yspeed = 12 #random.randint(1, 20)
+        self.ypos = -200  
+        self.xspeed = 0 
+        self.yspeed = 12 
 
-#Transistors from main screen to any level
+# Transistors from main screen to any level
 pasar1=False
 pasar2=False
 pasar3=False
 
-#Parametros de puntuaciones
+# Score parameters
 Score_final=0
 Bono_final=0
 Bono1=0
@@ -55,19 +54,13 @@ Bono2=0
 Bono3=0
 
 # sounds
-
 pygame.mixer.init()
 sonido_passlevel= pygame.mixer.Sound("POKEMON Level Up.mp3")
 Press_botton=pygame.mixer.Sound("Boton.mp3")
 sound_enem=pygame.mixer.Sound("Cartoon Bounce.mp3")
-#sound_enem3=pygame.mixer.Sound("Apagando sistema.mp3")
-#sound_enem1=pygame.mixer.Sound("Alien Apagado.mp3")
 
-#################################################################################################
-"FINAL SCREEN"
-#################################################################################################
-
-"Level 3 register function"
+# FINAL SCREEN"
+# Level 3 register function
 def Final_register():
     global puntaje_final,Score
     suma_final= Score + Bono2 + Bono1 + Bono3
@@ -80,6 +73,7 @@ def Final_register():
     final_to_mainscreen()
 
 def final_to_mainscreen():
+
     pygame.mixer.music.stop()
     pygame.mixer.music.load("Ghostly Mansion.mp3")
     pygame.mixer.music.play(100)
@@ -92,6 +86,7 @@ def final_to_mainscreen():
     main_screen()
 
 def final_screen():
+
     global final,Level_3,Score_final,Bono_final,Bono1,Bono2,Bono3
     Press_botton.play()
     pygame.mixer.music.stop()
@@ -115,13 +110,8 @@ def final_screen():
 
     final.mainloop()
 
-
-#################################################################################################
-"LEVEL 3"
-#################################################################################################
-
-"Functions to leave and stop game 3"
-
+# LEVEL 3
+# Functions to leave and stop game 3
 # Come back from game screen to main screen by press "salir" button
 def Screen_Level_3_to_mainscreen():
     Press_botton.play()
@@ -139,7 +129,7 @@ def Screen_Level_3_to_mainscreen():
     Level_3.destroy()
     main_screen()
 
-#Stop game function to press "pausa" button
+# Stop game function to press "pausa" button
 def detener3():
     Press_botton.play()
     global pausa3
@@ -150,8 +140,7 @@ def detener3():
         pygame.mixer.music.unpause()
 
 
-"Transition functions from level 3 to final screen"
-
+# Transition functions from level 3 to final screen
 def cambiara_final():
     global pase_nivel3
     if pase_nivel3==False:
@@ -169,7 +158,7 @@ def transiciona_final():
     continue_to_level3=Button(continue_nivel3,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10 ), command=final_screen)
     continue_to_level3.place(x=200 /2+120, y=200 /2-70)
 
-"Level 3 register function"
+# Level 3 register function
 def Level3_register():
     global puntaje,Score
     suma= Score + Bono2 + Bono1 + Bono3
@@ -181,7 +170,7 @@ def Level3_register():
     file.close()
     pantalla_derrota3_inicio()
 
-" Level 3 Defeat Screen"
+# Level 3 Defeat Screen
 
 # Transitory function to pass from defeat screen to main screen
 def pantalla_derrota3_inicio():
@@ -200,6 +189,7 @@ def pantalla_derrota3_inicio():
 def cambiar_a_derrota3():
     global transition3,Villanos3
     if not transition3:
+        Level_3.unbind_all("<Key>")
         Level_3.destroy()
         Villanos3.isDaemon
         return derrota3()
@@ -226,7 +216,7 @@ def derrota3():
     back_botton3.place(x= 285, y= height/2+150)
     derrota_canv3.mainloop()
 
-" Level 3 collisions"
+# Level 3 collisions
 def collision3(bats,ball):
     global Life3, Marcadores3,transition3,Time3,Life3,punto_choque3,enemigos3_list,enemigo3_object
     choque_bats=Level_3.bbox(bats)
@@ -249,6 +239,7 @@ def collision3(bats,ball):
         
 # Function to move the objects (bats)
 def mover_enemigos3():
+
     global Time3,Score,Bono3,Marcadores3,pausa3,salir3,enemigos3_list,punto_choque3,enemigo3_object,transition3,pase_nivel3,Life3
     pase_nivel3=True
     transition3=True
@@ -334,6 +325,7 @@ def mover_enemigos3():
         
 
 def Screen_Level_3():
+
     global Level_3, zombie3,enemigos3,Villanos3,marcador_puntaje3,marcador_nombre_canv3,Marcadores3,Time3,Life3,Score,Bono3,pasar3
     pygame.mixer.music.stop()
     pygame.mixer.music.load("Midnight Wood.mp3")
@@ -371,13 +363,11 @@ def Screen_Level_3():
     salir_boton3.place(x= 530, y= 30)
     detener_boton3=Button(Level_3,bd=5,bg="lightGoldenrod3", text = "   ¡Pausa!   ", font=("Franklin Gothic Medium",8 ), command=detener3)
     detener_boton3.place(x= 530, y= 70)
+
     # Player's airplane 
     zombie_img3 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
     zombie3= Level_3.create_image(400,450,anchor=NW, image=zombie_img3)
-    #caracter del enemigo
-    #image_enemigos1= ImageTk.PhotoImage(Image.open("enemy1.png"))#.resize((150,125)))
-    #enemigos1= Level_1.create_image(200,0,anchor=NW, image=image_enemigos1,tags="enemigos1")
-    
+
     #move user airplane 
     Level_3.bind_all("<Key>",mover3)
     
@@ -391,8 +381,7 @@ def Screen_Level_3():
 
     Level_3.mainloop()
 
-
-"GAME CONTROLS of level 3"
+# GAME CONTROLS of level 3"
 #Control to move the user airplane
 #<>
 def mover3(event):
@@ -418,13 +407,8 @@ def mover3(event):
             Level_3.coords(zombie3, x1,y1)
         Level_3.coords(zombie3, x1,y1+y)
 
-
-
-#################################################################################################
-"LEVEL 2"
-#################################################################################################
-
-"Functions to leave and stop game 2"
+# LEVEL 2
+# Functions to leave and stop game 2"
 
 # Come back from game screen to main screen by press "salir" button
 def Screen_Level_2_to_mainscreen():
@@ -443,7 +427,7 @@ def Screen_Level_2_to_mainscreen():
     Level_2.destroy()
     main_screen()
 
-#Stop game function to press "pausa" button
+# Stop game function to press "pausa" button
 def detener2():
     Press_botton.play()
     global pausa2
@@ -454,8 +438,7 @@ def detener2():
         pygame.mixer.music.unpause()
 
 
-"Transition functions from level 2 to level 3"
-
+# Transition functions from level 2 to level 3
 def cambiara_nivel2():
     global pase_nivel2
     if pase_nivel2==False:
@@ -473,7 +456,7 @@ def transiciona_nivel2():
     continue_to_level2=Button(continue_nivel2,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10) , command=Screen_Level_3)
     continue_to_level2.place(x=200 /2+120, y=200 /2-70)
 
-"Level 2 register function"
+# Level 2 register function
 def Level2_register():
     global puntaje,Score
     suma= Score + Bono2 + Bono1
@@ -485,8 +468,7 @@ def Level2_register():
     file.close()
     pantalla_derrota2_inicio()
 
-" Level 1 Defeat Screen"
-
+# Level 1 Defeat Screen
 # Transitory function to pass from defeat screen to main screen
 def pantalla_derrota2_inicio():
     Press_botton.play()
@@ -504,6 +486,7 @@ def pantalla_derrota2_inicio():
 def cambiar_a_derrota2():
     global transition2,Villanos2
     if not transition2:
+        Level_2.unbind_all("<Key>")
         Level_2.destroy()
         Villanos2.isDaemon
         return derrota2()
@@ -553,6 +536,7 @@ def collision2(fantasmas,ball):
         
 # Function to move the objects (Ghosts)
 def mover_enemigos2():
+
     global Time2,Score,Bono2,Marcadores2,pausa2,salir2,enemigos2_list,punto_choque2,enemigo2_object,transition2,pase_nivel2,Life2
     pase_nivel2=True
     transition2=True
@@ -638,6 +622,7 @@ def mover_enemigos2():
         
 
 def Screen_Level_2():
+
     global Level_2, zombie2,enemigos2,Villanos2,marcador_puntaje2,marcador_nombre_canv2,Marcadores2,Time2,Life2,Score,Bono2,pasar2
     pygame.mixer.music.stop()
     pygame.mixer.music.load("Halloween Music Witch.mp3")
@@ -671,11 +656,13 @@ def Screen_Level_2():
     Marcadores2.place(x=50,y=45)
     Marcador_nombre2= Label(Level_2,bg="black",fg="White", text="{}".format(Player),font=("Courier",11))
     Marcador_nombre2.place(x=280,y=55)
+
     # Stop and exit buttons
     salir_boton2=Button(Level_2,bd=5,bg="lightGoldenrod3", text = "   ¡salir!   ", font=("Franklin Gothic Medium",10 ), command=Screen_Level_2_to_mainscreen)
     salir_boton2.place(x= 530, y= 30)
     detener_boton2=Button(Level_2,bd=5,bg="lightGoldenrod3", text = "   ¡Pausa!   ", font=("Franklin Gothic Medium",8 ), command=detener2)
     detener_boton2.place(x= 530, y= 70)
+    
     # Player's airplane 
     zombie_img2 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
     zombie2= Level_2.create_image(400,450,anchor=NW, image=zombie_img2)
@@ -694,7 +681,7 @@ def Screen_Level_2():
     Level_2.mainloop()
 
 
-"GAME CONTROLS of level 2"
+# GAME CONTROLS of level 2
 #Control to move the user airplane
 #<>
 def mover2(event):
@@ -721,15 +708,13 @@ def mover2(event):
         Level_2.coords(zombie2, x1,y1+y)
 
 
+# Level 1
 
-#################################################################################################
-"LEVEL 1"
-#################################################################################################
-
-"Functions to leave and stop game 1"
+# Functions to leave and stop game 1
 
 # Come back from game screen to main screen by press "salir" button
 def Screen_Level_1_to_mainscreen():
+
     pygame.mixer.music.stop()
     pygame.mixer.music.load("Ghostly Mansion.mp3") 
     pygame.mixer.music.play(100)
@@ -745,8 +730,9 @@ def Screen_Level_1_to_mainscreen():
     Level_1.destroy()
     main_screen()
 
-#Stop game function to press "pausa"
+# Stop game function to press "pausa"
 def detener1():
+
     Press_botton.play()
     global pausa1
     pausa1=not pausa1
@@ -756,9 +742,9 @@ def detener1():
         pygame.mixer.music.unpause()
 
 
-"Transition from level 1 to level 2"
-
+# Transition from level 1 to level 2
 def cambiara_nivel1():
+
     global pase_nivel1
     if pase_nivel1==False:
         pase_nivel1=True
@@ -768,6 +754,7 @@ def cambiara_nivel1():
         board.after(10,cambiara_nivel1)
 
 def transicion_nivel1():
+
     pygame.mixer.music.stop()
     sonido_passlevel.play()
     continue_nivel= Label(Level_1,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "¡FELICIDADES! ¿Listo para el siguiente reto?",height=4,width=50,fg="white",font=("Courier",13))
@@ -775,7 +762,7 @@ def transicion_nivel1():
     continue_to_level=Button(continue_nivel,padx=10,pady=4,bd=5,bg="darkgrey", text = "Continuar", font=("Franklin Gothic Medium",10 ), command=Screen_Level_2)
     continue_to_level.place(x=200 /2+120, y=200 /2-70)
 
-"Level 1 register function"
+# Level 1 register function
 def Level1_register():
     global puntaje,Score
     suma= Score + Bono1
@@ -787,8 +774,7 @@ def Level1_register():
     file.close()
     pantalla_derrota1_inicio()
 
-" Level 1 Defeat Screen"
-
+# Level 1 Defeat Screen
 # Transitory function to pass from defeat screen to main screen
 def pantalla_derrota1_inicio():
     Press_botton.play()
@@ -806,6 +792,7 @@ def pantalla_derrota1_inicio():
 def cambiar_a_derrota1():
     global transition1,Villanos1
     if not transition1:
+        Level_1.unbind_all("<Key>")
         Level_1.destroy()
         Villanos1.isDaemon
         return derrota1()
@@ -832,8 +819,9 @@ def derrota1():
     back_botton1.place(x= 285, y= height/2+150)
     derrota_canv1.mainloop()
 
-" Level 1 collisions"
+# Level 1 collisions
 def collision1(calabazas,ball):
+
     global Life1, Marcadores1,transition1,Time1,Life1,punto_choque1,enemigos1_list,enemigo1_object
     choque_calabazas=Level_1.bbox(calabazas)
     choque_zombie= Level_1.bbox(zombie1)
@@ -855,6 +843,7 @@ def collision1(calabazas,ball):
         
 # Function to move the objects (pumpkins)
 def mover_enemigos1():
+
     global Time1,Score,Bono1,Marcadores1,pausa1,salir1,enemigos1_list,punto_choque1,enemigo1_object,transition1,pase_nivel1,Life1
     pase_nivel1=True
     transition1=True
@@ -945,7 +934,7 @@ def Screen_Level_1():
     pygame.mixer.music.play(100)
     background.destroy()
 
-    #Scoreboards
+    # Scoreboards
     Bono1=0
     Score = 0
     Time1 = 0
@@ -971,14 +960,15 @@ def Screen_Level_1():
     salir_boton1.place(x= 530, y= 30)
     detener_boton1=Button(Level_1,bd=5,bg="lightGoldenrod3", text = "   ¡Pausa!   ", font=("Franklin Gothic Medium",8 ), command=detener1)
     detener_boton1.place(x= 530, y= 70)
-    # Player's airplane 
+
+    # Player
     zombie_img1 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
     zombie1= Level_1.create_image(400,450,anchor=NW, image=zombie_img1)
     
-    #move user airplane 
+    # move user player
     Level_1.bind_all("<Key>",mover1)
     
-    #move enemy
+    # move enemy
     Villanos1= threading.Thread(target=mover_enemigos1)
     Villanos1.start()
 
@@ -988,9 +978,8 @@ def Screen_Level_1():
 
     Level_1.mainloop()
 
-
-"GAME CONTROLS"
-#Control to move the user airplane
+# Game controls
+# Control to move the user airplane
 #<>
 def mover1(event):
     global verificar_disparo1
@@ -1016,26 +1005,22 @@ def mover1(event):
             Level_1.coords(zombie1, x1,y1)
         Level_1.coords(zombie1, x1,y1+y)
 
-"TRANSITORY FUNCTIONS FROM MAIN SCREEN TO EVERY LEVEL"
-
+#Transitory functions from main screen to every level
 def nombre_vacío(Nombre):
     Press_botton.play()
     global Player
-    Player=Nombre
-    if Nombre=="" or len(Nombre)>18:
-        return ""
-    elif Nombre[0]==" ":
-        return nombre_vacío(Nombre[1:])   
+    Player=Nombre.replace(" ","")
+    if Player=="" or len(Player)>18:
+        return "" 
     Screen_Level_1()
 
 def nombre_vacío2(Nombre):
     Press_botton.play()
     global Player,pasar2
     Player=Nombre
-    if Nombre=="" or len(Nombre)>18:
-        return ""
-    elif Nombre[0]==" ":
-        return nombre_vacío2(Nombre[1:])
+    Player=Nombre.replace(" ","")
+    if Player=="" or len(Player)>18:
+        return "" 
     pasar2=True   
     Screen_Level_2()
 
@@ -1043,17 +1028,17 @@ def nombre_vacío3(Nombre):
     Press_botton.play()
     global Player,pasar3
     Player=Nombre
-    if Nombre=="" or len(Nombre)>18:
-        return ""
-    elif Nombre[0]==" ":
-        return nombre_vacío3(Nombre[1:])
+    Player=Nombre.replace(" ","")
+    if Player=="" or len(Player)>18:
+        return "" 
     pasar3=True   
     Screen_Level_3()
     
-"MAIN SCREEN"
-
+# MAIN SCREEN
 def main_screen():
-    global background,Score
+
+    global background, Score
+
     Score=0
 
     # canvas creation
@@ -1061,18 +1046,20 @@ def main_screen():
     background = Canvas(board,height = height, width = width)
     background.pack()
     img_fondo= background.create_image(0,0,anchor=NW, image=imagenmenu)
+
     #Ornaments images
     telaraña1_img= ImageTk.PhotoImage(Image.open("telaraña1.png").resize((300,300)))
     telaraña2_img= ImageTk.PhotoImage(Image.open("telaraña2.png").resize((250,250)))
     characters_name = ImageTk.PhotoImage(Image.open("Nombre max.png").resize((260,160)))
-    #Ornaments
     telaraña1= background.create_image(-36,height-260,anchor=NW, image=telaraña1_img)
     telaraña2= background.create_image(width-208,-17,anchor=NW, image=telaraña2_img)
     max_name= background.create_image(350,30,anchor=NW, image=characters_name)
+
     # Entry
     Jugador = Entry(background,bd=8,bg="white",fg="black",width=26,font=("Franklin Gothic Medium",17 ))
     Jugador.place(x= width/2 - Jugador.winfo_reqwidth()/2/1.5, y= height/2-300,width=240, height=50)
-    #Buttons images
+
+    # Buttons images
     imageButton_easy = ImageTk.PhotoImage(Image.open("easy.png").resize((80,45)))
     imageButton_normal = ImageTk.PhotoImage(Image.open("normal.png").resize((90,52)))
     imageButton_hard = ImageTk.PhotoImage(Image.open("hard.png").resize((80,45)))
@@ -1083,24 +1070,28 @@ def main_screen():
     imageButton_book = ImageTk.PhotoImage(Image.open("book.jpg"))
     imageButton_register = ImageTk.PhotoImage(Image.open("button4.png"))
 
-    #Buttons
-    "Levels"
+    # Buttons
+    # Levels
     easyButton = Button(background, image = imageButton_easy,borderwidth= 10, bg = 'black', command= lambda: nombre_vacío(Jugador.get()))
     easyButton.place(x = 275, y = 575)
     normalButton = Button(background, image = imageButton_normal,borderwidth= 10, bg = 'black', command= lambda: nombre_vacío2(Jugador.get()))
     normalButton.place(x = 450, y = 575)
     hardButton = Button(background, image = imageButton_hard,borderwidth= 10, bg = 'black', command= lambda: nombre_vacío3(Jugador.get()))
     hardButton.place(x = 625, y = 575)
-    "Complementary Buttons"
+
+    # Complementary Buttons
     # Exit of the game
     exitButton = Button(background,bd=6,image=imageButton_exit, text = " Salir ", font=("Franklin Gothic Medium",8),padx=12,pady=2, command= quit)
     exitButton.place(x = 940, y = 10)
+
     # open about window button
     Boton_about = Button(background,image=imageButton_about,bd=6,bg="darkgrey",command= screen_about)
     Boton_about.place(x = 30, y = 110)
+
     # open scores window button
     Boton_scores = Button(background,image=imageButton_scores,bd=6,bg="darkgrey", command= insert_lista)
     Boton_scores.place(x = 30, y = 30)
+
     # open history window
     bookButton = Button(background, image= imageButton_book, bg = 'white', borderwidth=5,command= historyGame)
     bookButton.place(x=90, y= 540)
@@ -1108,12 +1099,10 @@ def main_screen():
     Jugador.focus()
     background.mainloop()
 
-
-"SCREENS IN THE MAIN SCREEN"
-
-"History screen"
-
+# SCREENS IN THE MAIN SCREEN
+# History screen
 def pass_historyGame_mainscreen():
+
     global history_canv
     Press_botton.play()
     pygame.mixer.music.stop()
@@ -1123,6 +1112,7 @@ def pass_historyGame_mainscreen():
     main_screen()
 
 def historyGame():
+
     Press_botton.play()
     pygame.mixer.music.stop()
     pygame.mixer.music.load("Epic Halloween MusicDark Vocal.mp3")
@@ -1139,15 +1129,16 @@ def historyGame():
     historyButton.place(x=5, y=10)
     history_canv.mainloop()
 
-    "Screen about"
-
+# Screen about
 def pass_about_mainscreen():
+
     global about
     Press_botton.play()
     about.destroy()
     main_screen()
 
 def screen_about():
+
     global background,about
     Press_botton.play()
     background.destroy()
@@ -1166,15 +1157,16 @@ def screen_about():
     comeback.place(x=width /2-20, y=580)
     about.mainloop()
 
-" Scores screen"
-
+# Scores screen
 def pass_scores_to_mainscreen():
+
     global scores_canv
     Press_botton.play()
     scores_canv.destroy()
     main_screen()
 
 def screen_scores():
+
     global background,scores_canv
     Press_botton.play()
     background.destroy()
@@ -1195,10 +1187,11 @@ def screen_scores():
     text_file.close()
     scores_canv.mainloop()
 
-"Arrange scores"
-
+# Arrange scores
 def Update():
+
     global scores_var,orden_score,puntajes_let,exp1
+
     exp1=0
     scores_var_temp=[]
     puntajes_let=[]
@@ -1226,6 +1219,7 @@ def Update():
     screen_scores()
 
 def insert_lista():
+
     global orden_score,scores_var
     orden_score=[]
     scores_var = []
@@ -1241,8 +1235,7 @@ def insert_lista():
         orden_score+=[num]
     Update()
 
-"Quick sort algorithm"
-
+# Quick sort algorithm
 def quick_sort(lista):
     
     length = len(lista)

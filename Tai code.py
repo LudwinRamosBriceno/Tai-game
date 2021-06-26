@@ -1263,3 +1263,4 @@ pygame.mixer.music.play(100)
 
 main_screen()
 board.mainloop()
+print("hola")

@@ -1,6 +1,10 @@
-Mario	1
-Ludwin	82
-Lucia	82
-Mark	10
-Julian	72
-Yhon	50
+LudwinR	20
+LudwinR	200
+Carlos	130
+PepeErmoso	150
+Marialaporra	90
+Cerda	70
+LaPapa	25
+PepitoElbambino	50
+Paracetamol	185
+tupadre	80

@@ -1,9 +1,10 @@
-import pygame
+#import pygame
 from tkinter import *
 from PIL import ImageTk, Image
 import random
 import time
 import threading
+import pygame
 
 # Main window
 board = Tk()
@@ -12,7 +13,7 @@ board = Tk()
 board.geometry("1000x700")
 board.resizable(height=False, width=False)
 board.title("Tai: the little zombie")
-board.iconbitmap("zombie.ico")
+board.iconbitmap("Assets\\zombie.ico")
 
 screen_width = board.winfo_screenwidth()
 screen_height = board.winfo_screenheight()
@@ -31,6 +32,9 @@ board.resizable(False, False)
 x=10
 # "y" to move the image zombie for "UP and DOWN"
 y=10
+
+# Puntaje del jugador en general
+Score=0
 
 # Speeds class for enemies
 
@@ -55,9 +59,9 @@ Bono3=0
 
 # sounds
 pygame.mixer.init()
-sonido_passlevel= pygame.mixer.Sound("POKEMON Level Up.mp3")
-Press_botton=pygame.mixer.Sound("Boton.mp3")
-sound_enem=pygame.mixer.Sound("Cartoon Bounce.mp3")
+sonido_passlevel= pygame.mixer.Sound("Assets\\POKEMON Level Up.mp3")
+Press_botton=pygame.mixer.Sound("Assets\\Boton.mp3")
+sound_enem=pygame.mixer.Sound("Assets\\Cartoon Bounce.mp3")
 
 # FINAL SCREEN"
 # Level 3 register function
@@ -67,15 +71,15 @@ def Final_register():
     puntaje_final=str(suma_final)
 
     # save name 
-    file_final = open("player.txt", "a")
-    file_final.write(Player +"\t"+ puntaje_final + "\n")
+    file_final = open("Assets\\player.txt", "a")
+    file_final.write(Player +" "+ puntaje_final + "\n")
     file_final.close()
     final_to_mainscreen()
 
 def final_to_mainscreen():
 
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3")
     pygame.mixer.music.play(100)
     global salir3,Score_final,Bono_final
     Press_botton.play()
@@ -90,14 +94,14 @@ def final_screen():
     global final,Level_3,Score_final,Bono_final,Bono1,Bono2,Bono3
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("MELANCHOLI.mp3")
+    pygame.mixer.music.load("Assets\\MELANCHOLI.mp3")
     pygame.mixer.music.play(10)
     Level_3.destroy()
     puntaje_final=0
     Bono_final=0
     Bono_final= Bono1 + Bono2 + Bono3
     puntaje_final= Score + Bono1 + Bono2 + Bono3
-    img_final= ImageTk.PhotoImage(Image.open("Final screen.jpg").resize((1000,700)))
+    img_final= ImageTk.PhotoImage(Image.open("Assets\\Final screen.jpg").resize((1000,700)))
     final = Canvas(board,height = height, width = width)
     final.pack()
     img_final3= final.create_image(0,0,anchor=NW, image=img_final)
@@ -116,7 +120,7 @@ def final_screen():
 def Screen_Level_3_to_mainscreen():
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3")
     pygame.mixer.music.play(100)
     global Score, Life3, Time3,Marcadores3,salir3
     salir3=False
@@ -165,7 +169,7 @@ def Level3_register():
     puntaje=str(suma)
 
     # save name 
-    file = open("player.txt", "a")
+    file = open("Assets\\player.txt", "a")
     file.write(Player +"\t"+ puntaje + "\n")
     file.close()
     pantalla_derrota3_inicio()
@@ -176,9 +180,9 @@ def Level3_register():
 def pantalla_derrota3_inicio():
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3")
     pygame.mixer.music.play(100)
-    global Score, Time3,Life3
+    global Score, Time3, Life3
     Score=0
     Time3=0
     Life3=3
@@ -199,11 +203,11 @@ def cambiar_a_derrota3():
 def derrota3():
     global derrota_canv3,Score
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.load("Assets\\Candyman Theme.mp3")
     pygame.mixer.music.play(100)
-    img_derrota3= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
-    img_words_derrota3= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
-    img_titulo_derrota3= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
+    img_derrota3= ImageTk.PhotoImage(Image.open("Assets\\Defeat.jpg").resize((1000,700)))
+    img_words_derrota3= ImageTk.PhotoImage(Image.open("Assets\\Derrota words.png").resize((600,250)))
+    img_titulo_derrota3= ImageTk.PhotoImage(Image.open("Assets\\titulo derrota.png").resize((600,300)))
     derrota_canv3= Canvas(board, width=width, height=height)
     derrota_canv3.pack()
     derrota_canv3.create_image(0,0,anchor=NW, image=img_derrota3)
@@ -211,7 +215,7 @@ def derrota3():
     titulo_derrota3 = derrota_canv3.create_image(50,40,anchor=NW, image=img_titulo_derrota3)
     score_nivel3= Label(derrota_canv3,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "Score: {}".format(Score),height=1,width=15,fg="white",font=("Courier",13))
     score_nivel3.place(x=250,y=400)
-    img_volver_button3= ImageTk.PhotoImage(Image.open("destroy.png").resize((75,75)))
+    img_volver_button3= ImageTk.PhotoImage(Image.open("Assets\\destroy.png").resize((75,75)))
     back_botton3=Button(derrota_canv3,image=img_volver_button3,bd=5,bg="darkgrey", font=("Franklin Gothic Medium",15 ), command=Level3_register)
     back_botton3.place(x= 285, y= height/2+150)
     derrota_canv3.mainloop()
@@ -252,7 +256,7 @@ def mover_enemigos3():
     x_enemigos3=random.choice(range(2,9))
     enemigos3_list=[]   # keeps track of objects
     enemigo3_object = []      # keeps track of objects representation on the Canvas
-    image_enemigos3= ImageTk.PhotoImage(Image.open("enemy3.png").resize((125,100)))
+    image_enemigos3= ImageTk.PhotoImage(Image.open("Assets\\enemy3.png").resize((125,100)))
     for i in range(5):
         enemigo3_var = Class_enemies()
         enemigos3_list+=[enemigo3_var]
@@ -328,7 +332,7 @@ def Screen_Level_3():
 
     global Level_3, zombie3,enemigos3,Villanos3,marcador_puntaje3,marcador_nombre_canv3,Marcadores3,Time3,Life3,Score,Bono3,pasar3
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Midnight Wood.mp3")
+    pygame.mixer.music.load("Assets\\Midnight Wood.mp3")
     pygame.mixer.music.play(100)
     if pasar3:
         background.destroy()
@@ -344,14 +348,14 @@ def Screen_Level_3():
     Life3 = 3
     
     # Level 3 Canvas creation
-    imagen3 = ImageTk.PhotoImage(Image.open("graveyard.png"))
-    Level_3= Canvas(board, width=width, height=height)
+    imagen3 = ImageTk.PhotoImage(Image.open("Assets\\graveyard.png"))
+    Level_3 = Canvas(board, width=width, height=height)
     Level_3.pack()
     Level_3.create_image(0,0,anchor=NW, image=imagen3)
 
     # Level 3 Scoreboard 
-    marcador_nombre_img3 = ImageTk.PhotoImage(Image.open("cartel nombre.png").resize((350,150)))
-    marcador_puntaje_img3 = ImageTk.PhotoImage(Image.open("Marcadores.png").resize((300,150)))
+    marcador_nombre_img3 = ImageTk.PhotoImage(Image.open("Assets\\cartel nombre.png").resize((350,150)))
+    marcador_puntaje_img3 = ImageTk.PhotoImage(Image.open("Assets\\Marcadores.png").resize((300,150)))
     marcador_nombre_canv3= Level_3.create_image(200,-10,anchor=NW, image=marcador_nombre_img3)
     marcador_puntaje3= Level_3.create_image(-20,-20,anchor=NW, image=marcador_puntaje_img3)
     Marcadores3= Label(Level_3,bg="black",fg="White", text="Score: {}\n   Time: {} seg \n Life:{}".format(Score, Time3,Life3),font=("Courier",11))
@@ -365,7 +369,7 @@ def Screen_Level_3():
     detener_boton3.place(x= 530, y= 70)
 
     # Player's airplane 
-    zombie_img3 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
+    zombie_img3 = ImageTk.PhotoImage(Image.open("Assets\\player.png").resize((70,100)))
     zombie3= Level_3.create_image(400,450,anchor=NW, image=zombie_img3)
 
     #move user airplane 
@@ -415,7 +419,7 @@ def Screen_Level_2_to_mainscreen():
     Press_botton.play()
     global Score, Life2, Time2,Marcadores2,salir2
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3")
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3")
     pygame.mixer.music.play(100)
     salir2=False
     Score=0
@@ -474,7 +478,7 @@ def pantalla_derrota2_inicio():
     Press_botton.play()
     global Score, Time2,Life2
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3") 
     pygame.mixer.music.play(100)
     Score=0
     Time2=0
@@ -496,11 +500,11 @@ def cambiar_a_derrota2():
 def derrota2():
     global derrota_canv2,Score
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.load("Assets\\Candyman Theme.mp3")
     pygame.mixer.music.play(100)
-    img_derrota2= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
-    img_words_derrota2= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
-    img_titulo_derrota2= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
+    img_derrota2= ImageTk.PhotoImage(Image.open("Assets\\Defeat.jpg").resize((1000,700)))
+    img_words_derrota2= ImageTk.PhotoImage(Image.open("Assets\\Derrota words.png").resize((600,250)))
+    img_titulo_derrota2= ImageTk.PhotoImage(Image.open("Assets\\titulo derrota.png").resize((600,300)))
     derrota_canv2= Canvas(board, width=width, height=height)
     derrota_canv2.pack()
     derrota_canv2.create_image(0,0,anchor=NW, image=img_derrota2)
@@ -508,7 +512,7 @@ def derrota2():
     titulo_derrota2 = derrota_canv2.create_image(50,40,anchor=NW, image=img_titulo_derrota2)
     score_nivel2= Label(derrota_canv2,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "Score: {}".format(Score),height=1,width=15,fg="white",font=("Courier",13))
     score_nivel2.place(x=250,y=400)
-    img_volver_button2= ImageTk.PhotoImage(Image.open("destroy.png").resize((75,75)))
+    img_volver_button2= ImageTk.PhotoImage(Image.open("Assets\\destroy.png").resize((75,75)))
     back_botton2=Button(derrota_canv2,image=img_volver_button2,bd=5,bg="darkgrey", font=("Franklin Gothic Medium",15 ), command=Level2_register)
     back_botton2.place(x= 285, y= height/2+150)
     derrota_canv2.mainloop()
@@ -549,7 +553,7 @@ def mover_enemigos2():
     x_enemigos2=random.choice(range(2,9))
     enemigos2_list=[]   # keeps track of objects
     enemigo2_object = []      # keeps track of objects representation on the Canvas
-    image_enemigos2= ImageTk.PhotoImage(Image.open("enemy2.png").resize((125,100)))
+    image_enemigos2= ImageTk.PhotoImage(Image.open("Assets\\enemy2.png").resize((125,100)))
     for i in range(4):
         enemigo2_var = Class_enemies()
         enemigos2_list+=[enemigo2_var]
@@ -625,7 +629,7 @@ def Screen_Level_2():
 
     global Level_2, zombie2,enemigos2,Villanos2,marcador_puntaje2,marcador_nombre_canv2,Marcadores2,Time2,Life2,Score,Bono2,pasar2
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Halloween Music Witch.mp3")
+    pygame.mixer.music.load("Assets\\Halloween Music Witch.mp3")
     pygame.mixer.music.play(100)
     if pasar2:
         Bono2=0
@@ -642,14 +646,14 @@ def Screen_Level_2():
     Life2 = 3
     
     # Level 2 Canvas creation
-    imagen2 = ImageTk.PhotoImage(Image.open("house.png"))
+    imagen2 = ImageTk.PhotoImage(Image.open("Assets\\house.png"))
     Level_2= Canvas(board, width=width, height=height)
     Level_2.pack()
     Level_2.create_image(0,0,anchor=NW, image=imagen2)
 
     # Level 2 Scoreboard 
-    marcador_nombre_img2 = ImageTk.PhotoImage(Image.open("cartel nombre.png").resize((350,150)))
-    marcador_puntaje_img2 = ImageTk.PhotoImage(Image.open("Marcadores.png").resize((300,150)))
+    marcador_nombre_img2 = ImageTk.PhotoImage(Image.open("Assets\\cartel nombre.png").resize((350,150)))
+    marcador_puntaje_img2 = ImageTk.PhotoImage(Image.open("Assets\\Marcadores.png").resize((300,150)))
     marcador_nombre_canv2= Level_2.create_image(200,-10,anchor=NW, image=marcador_nombre_img2)
     marcador_puntaje2= Level_2.create_image(-20,-20,anchor=NW, image=marcador_puntaje_img2)
     Marcadores2= Label(Level_2,bg="black",fg="White", text="Score: {}\n   Time: {} seg \n Life:{}".format(Score, Time2,Life2),font=("Courier",11))
@@ -664,7 +668,7 @@ def Screen_Level_2():
     detener_boton2.place(x= 530, y= 70)
     
     # Player's airplane 
-    zombie_img2 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
+    zombie_img2 = ImageTk.PhotoImage(Image.open("Assets\\player.png").resize((70,100)))
     zombie2= Level_2.create_image(400,450,anchor=NW, image=zombie_img2)
     
     #move user airplane 
@@ -716,7 +720,7 @@ def mover2(event):
 def Screen_Level_1_to_mainscreen():
 
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3") 
     pygame.mixer.music.play(100)
     Press_botton.play()
     global Score, Life1, Time1,Marcadores1,salir1
@@ -769,7 +773,7 @@ def Level1_register():
     puntaje=str(suma)
 
     # save name 
-    file = open("player.txt", "a")
+    file = open("Assets\\player.txt", "a")
     file.write(Player +"\t"+ puntaje + "\n")
     file.close()
     pantalla_derrota1_inicio()
@@ -779,7 +783,7 @@ def Level1_register():
 def pantalla_derrota1_inicio():
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3") 
     pygame.mixer.music.play(100)
     global Score, Time1,Life1
     Score=0
@@ -802,11 +806,11 @@ def cambiar_a_derrota1():
 def derrota1():
     global derrota_canv1,Score
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Candyman Theme.mp3")
+    pygame.mixer.music.load("Assets\\Candyman Theme.mp3")
     pygame.mixer.music.play(100)
-    img_derrota= ImageTk.PhotoImage(Image.open("Defeat.jpg").resize((1000,700)))
-    img_words_derrota= ImageTk.PhotoImage(Image.open("Derrota words.png").resize((600,250)))
-    img_titulo_derrota= ImageTk.PhotoImage(Image.open("titulo derrota.png").resize((600,300)))
+    img_derrota= ImageTk.PhotoImage(Image.open("Assets\\Defeat.jpg").resize((1000,700)))
+    img_words_derrota= ImageTk.PhotoImage(Image.open("Assets\\Derrota words.png").resize((600,250)))
+    img_titulo_derrota= ImageTk.PhotoImage(Image.open("Assets\\titulo derrota.png").resize((600,300)))
     derrota_canv1= Canvas(board, width=width, height=height)
     derrota_canv1.pack()
     derrota_canv1.create_image(0,0,anchor=NW, image=img_derrota)
@@ -814,7 +818,7 @@ def derrota1():
     titulo_derrota = derrota_canv1.create_image(50,40,anchor=NW, image=img_titulo_derrota)
     score_nivel1= Label(derrota_canv1,borderwidth=10,relief="sunken",bg="black",anchor=N, text= "Score: {}".format(Score),height=1,width=15,fg="white",font=("Courier",13))
     score_nivel1.place(x=250,y=400)
-    img_volver_button= ImageTk.PhotoImage(Image.open("destroy.png").resize((75,75)))
+    img_volver_button= ImageTk.PhotoImage(Image.open("Assets\\destroy.png").resize((75,75)))
     back_botton1=Button(derrota_canv1,image=img_volver_button,bd=5,bg="darkgrey", font=("Franklin Gothic Medium",15 ), command=Level1_register)
     back_botton1.place(x= 285, y= height/2+150)
     derrota_canv1.mainloop()
@@ -856,7 +860,7 @@ def mover_enemigos1():
     x_enemigos1=random.choice(range(2,9))
     enemigos1_list=[]   # keeps track of objects
     enemigo1_object = []      # keeps track of objects representation on the Canvas
-    image_enemigos1= ImageTk.PhotoImage(Image.open("enemy1.png").resize((150,125)))
+    image_enemigos1= ImageTk.PhotoImage(Image.open("Assets\\enemy1.png").resize((150,125)))
     for i in range(3):
         enemigo1_var = Class_enemies()
         enemigos1_list+=[enemigo1_var]
@@ -930,7 +934,7 @@ def mover_enemigos1():
 def Screen_Level_1():
     global Level_1, zombie1,enemigos1,Villanos1,marcador_puntaje1,marcador_nombre_canv1,Marcadores1,Time1,Life1,Score,Bono1
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("halloween.mp3")
+    pygame.mixer.music.load("Assets\\halloween.mp3")
     pygame.mixer.music.play(100)
     background.destroy()
 
@@ -941,14 +945,14 @@ def Screen_Level_1():
     Life1 = 3
     
     # Level 1 Canvas creation
-    imagen1 = ImageTk.PhotoImage(Image.open("room.png"))
+    imagen1 = ImageTk.PhotoImage(Image.open("Assets\\room.png"))
     Level_1= Canvas(board, width=width, height=height)
     Level_1.pack()
     Level_1.create_image(0,0,anchor=NW, image=imagen1)
 
     # Level 1 Scoreboard 
-    marcador_nombre_img1 = ImageTk.PhotoImage(Image.open("cartel nombre.png").resize((350,150)))
-    marcador_puntaje_img1 = ImageTk.PhotoImage(Image.open("Marcadores.png").resize((300,150)))
+    marcador_nombre_img1 = ImageTk.PhotoImage(Image.open("Assets\\cartel nombre.png").resize((350,150)))
+    marcador_puntaje_img1 = ImageTk.PhotoImage(Image.open("Assets\\Marcadores.png").resize((300,150)))
     marcador_nombre_canv1= Level_1.create_image(200,-10,anchor=NW, image=marcador_nombre_img1)
     marcador_puntaje1= Level_1.create_image(-20,-20,anchor=NW, image=marcador_puntaje_img1)
     Marcadores1= Label(Level_1,bg="black",fg="White", text="Score: {}\n   Time: {} seg \n Life:{}".format(Score, Time1,Life1),font=("Courier",11))
@@ -962,7 +966,7 @@ def Screen_Level_1():
     detener_boton1.place(x= 530, y= 70)
 
     # Player
-    zombie_img1 = ImageTk.PhotoImage(Image.open("player.png").resize((70,100)))
+    zombie_img1 = ImageTk.PhotoImage(Image.open("Assets\\player.png").resize((70,100)))
     zombie1= Level_1.create_image(400,450,anchor=NW, image=zombie_img1)
     
     # move user player
@@ -1039,18 +1043,18 @@ def main_screen():
 
     global background, Score
 
-    Score=0
+    #Score = 0
 
     # canvas creation
-    imagenmenu = ImageTk.PhotoImage(Image.open("mainwindow.png"))
+    imagenmenu = ImageTk.PhotoImage(Image.open("Assets\\mainwindow.png"))
     background = Canvas(board,height = height, width = width)
     background.pack()
     img_fondo= background.create_image(0,0,anchor=NW, image=imagenmenu)
 
     #Ornaments images
-    telaraña1_img= ImageTk.PhotoImage(Image.open("telaraña1.png").resize((300,300)))
-    telaraña2_img= ImageTk.PhotoImage(Image.open("telaraña2.png").resize((250,250)))
-    characters_name = ImageTk.PhotoImage(Image.open("Nombre max.png").resize((260,160)))
+    telaraña1_img= ImageTk.PhotoImage(Image.open("Assets\\telaraña1.png").resize((300,300)))
+    telaraña2_img= ImageTk.PhotoImage(Image.open("Assets\\telaraña2.png").resize((250,250)))
+    characters_name = ImageTk.PhotoImage(Image.open("Assets\\Nombre max.png").resize((260,160)))
     telaraña1= background.create_image(-36,height-260,anchor=NW, image=telaraña1_img)
     telaraña2= background.create_image(width-208,-17,anchor=NW, image=telaraña2_img)
     max_name= background.create_image(350,30,anchor=NW, image=characters_name)
@@ -1060,15 +1064,15 @@ def main_screen():
     Jugador.place(x= width/2 - Jugador.winfo_reqwidth()/2/1.5, y= height/2-300,width=240, height=50)
 
     # Buttons images
-    imageButton_easy = ImageTk.PhotoImage(Image.open("easy.png").resize((80,45)))
-    imageButton_normal = ImageTk.PhotoImage(Image.open("normal.png").resize((90,52)))
-    imageButton_hard = ImageTk.PhotoImage(Image.open("hard.png").resize((80,45)))
-    imageButton_exit = ImageTk.PhotoImage(Image.open("exit.jpg"))
-    imageButton_about = ImageTk.PhotoImage(Image.open("button2.png"))
-    imageButton_scores = ImageTk.PhotoImage(Image.open("button1.png"))
-    imageButton_infoImage = ImageTk.PhotoImage(Image.open("button3.png"))
-    imageButton_book = ImageTk.PhotoImage(Image.open("book.jpg"))
-    imageButton_register = ImageTk.PhotoImage(Image.open("button4.png"))
+    imageButton_easy = ImageTk.PhotoImage(Image.open("Assets\\easy.png").resize((80,45)))
+    imageButton_normal = ImageTk.PhotoImage(Image.open("Assets\\normal.png").resize((90,52)))
+    imageButton_hard = ImageTk.PhotoImage(Image.open("Assets\\hard.png").resize((80,45)))
+    imageButton_exit = ImageTk.PhotoImage(Image.open("Assets\\exit.jpg"))
+    imageButton_about = ImageTk.PhotoImage(Image.open("Assets\\button2.png"))
+    imageButton_scores = ImageTk.PhotoImage(Image.open("Assets\\button1.png"))
+    imageButton_infoImage = ImageTk.PhotoImage(Image.open("Assets\\button3.png"))
+    imageButton_book = ImageTk.PhotoImage(Image.open("Assets\\book.jpg"))
+    imageButton_register = ImageTk.PhotoImage(Image.open("Assets\\button4.png"))
 
     # Buttons
     # Levels
@@ -1106,7 +1110,7 @@ def pass_historyGame_mainscreen():
     global history_canv
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Ghostly Mansion.mp3") 
+    pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3") 
     pygame.mixer.music.play(100)
     history_canv.destroy()
     main_screen()
@@ -1115,16 +1119,16 @@ def historyGame():
 
     Press_botton.play()
     pygame.mixer.music.stop()
-    pygame.mixer.music.load("Epic Halloween MusicDark Vocal.mp3")
+    pygame.mixer.music.load("Assets\\Epic Halloween MusicDark Vocal.mp3")
     pygame.mixer.music.play(100)
     global history_canv, background
     background.destroy()
-    img_history = ImageTk.PhotoImage(Image.open("historywindow.png"))
+    img_history = ImageTk.PhotoImage(Image.open("Assets\\historywindow.png"))
     history_canv= Canvas(board,height = height, width = width)
     history_canv.pack()
     history_background= history_canv.create_image(0,0,anchor=NW, image=img_history)
 
-    historyButton_img = ImageTk.PhotoImage(Image.open("destroy.png"))
+    historyButton_img = ImageTk.PhotoImage(Image.open("Assets\\destroy.png"))
     historyButton = Button(history_canv, image = historyButton_img,  borderwidth = 6, bg = 'black',command = pass_historyGame_mainscreen)
     historyButton.place(x=5, y=10)
     history_canv.mainloop()
@@ -1142,7 +1146,7 @@ def screen_about():
     global background,about
     Press_botton.play()
     background.destroy()
-    img_about = ImageTk.PhotoImage(Image.open("aboutwindow.png")) 
+    img_about = ImageTk.PhotoImage(Image.open("Assets\\aboutwindow.png")) 
     about = Canvas(board,height = height, width = width)
     about.pack()
     about_fondo= about.create_image(0,0,anchor=NW, image=img_about)
@@ -1152,7 +1156,7 @@ def screen_about():
     "\n\n Docente a cargo: Leonardo Araya Martínez \n\n Estudiantes Creadores:\n\n Ludwin José Ramos Briceño \n\n Juan Pablo Sánchez Sánchez"
     "\n\n Grupo 03 \n\n Curso I-2021",height=24,width=50,fg="white",font=("Courier",13))
     information.place(x=255,y=60)
-    imageButton_comeback_about = ImageTk.PhotoImage(Image.open("destroy.png").resize((60,60)))
+    imageButton_comeback_about = ImageTk.PhotoImage(Image.open("Assets\\destroy.png").resize((60,60)))
     comeback=Button(about,padx=18,pady=5,image=imageButton_comeback_about,bd=5,bg="darkgrey", command=pass_about_mainscreen)
     comeback.place(x=width /2-20, y=580)
     about.mainloop()
@@ -1170,20 +1174,25 @@ def screen_scores():
     global background,scores_canv
     Press_botton.play()
     background.destroy()
-    img_about = ImageTk.PhotoImage(Image.open("levelwindow.jpg")) 
+    img_about = ImageTk.PhotoImage(Image.open("Assets\\levelwindow.jpg")) 
     scores_canv = Canvas(board,height = height, width = width)
     scores_canv.pack()
     scores_fondo= scores_canv.create_image(0,0,anchor=NW, image=img_about)
-    img_puntuaciones = ImageTk.PhotoImage(Image.open("text puntuaciones.png"))
+
+    img_puntuaciones = ImageTk.PhotoImage(Image.open("Assets\\text puntuaciones.png"))
     text_puntuaciones= scores_canv.create_image(90,60,anchor=NW, image=img_puntuaciones)
-    imageButton_comeback_scores = ImageTk.PhotoImage(Image.open("destroy.png").resize((60,60)))
-    comeback=Button(scores_canv,padx=18,pady=5,image=imageButton_comeback_scores,bd=5,bg="darkgrey", command=pass_scores_to_mainscreen)
-    comeback.place(x=240, y=500)
-    text_window = Text(scores_canv,width=30,height=10,bg="black",fg="white", borderwidth= 8,font = ('Helvetica', 16))
-    window_text= scores_canv.create_window(80,180,anchor=NW, window=text_window)
-    text_file = open("result.txt", "r+")
-    txt = text_file.read()
-    text_window.insert(END, txt)
+
+    imageButton_comeback_scores = ImageTk.PhotoImage(Image.open("Assets\\destroy.png").resize((60,60)))
+    comeback = Button(scores_canv,padx=18,pady=5,image=imageButton_comeback_scores,bd=5,bg="darkgrey", command=pass_scores_to_mainscreen)
+    comeback.place(x = 240, y = 500)
+
+    txt = StringVar()
+    text_window2 = Label(scores_canv,borderwidth=8, relief ="sunken",bg ="black", anchor = N, textvariable= txt, height = 10, width = 30, fg ="white", font = ('Helvetica', 16))
+
+    text_file = open("Assets\\result.txt", "r+")
+    txt.set(text_file.read())
+    text_window2.place(x = 80, y = 180)
+
     text_file.close()
     scores_canv.mainloop()
 
@@ -1197,16 +1206,16 @@ def Update():
     puntajes_let=[]
     puntajes_let=quick_sort(orden_score)
     puntajes_let.reverse()
-    file = open('result.txt', 'w')
+    file = open("Assets\\result.txt", 'w')
     for i in puntajes_let:
         
-        n=str(i)
+        n = str(i)
         scores_var_temp=[]
         for score2, name in scores_var:
 
             if n==score2 and exp1<5:
                 
-                file.write(name +"\t"+ score2 + "\n")
+                file.write(name +" "+ score2 + "\n")
                 exp1+=1
             else:
                 scores_var_temp+=[[score2,name]]
@@ -1223,7 +1232,7 @@ def insert_lista():
     global orden_score,scores_var
     orden_score=[]
     scores_var = []
-    with open("player.txt") as f:
+    with open("Assets\\player.txt") as f:
         for line in f:
             if not line.strip():
                 continue
@@ -1258,9 +1267,8 @@ def quick_sort(lista):
     
     return quick_sort(items_lower) + [pivot] + quick_sort(items_greater)
 
-pygame.mixer.music.load("Ghostly Mansion.mp3") 
+pygame.mixer.music.load("Assets\\Ghostly Mansion.mp3") 
 pygame.mixer.music.play(100)
 
 main_screen()
 board.mainloop()
-print("hola")
